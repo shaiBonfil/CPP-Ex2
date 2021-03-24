@@ -1,7 +1,5 @@
-// #pragma once
 #include <iostream>
 #include "Direction.hpp"
-
 using namespace std;
 
 namespace ariel{
