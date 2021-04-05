@@ -15,8 +15,7 @@ namespace ariel
 
     private:
         //define object holds the raw and the col on the borad
-        map<uint, uint> inner;
-        map<map<uint, uint>, char> board;
+        map<pair<uint, uint>, char> board;
         uint max_row;
         uint min_row;
         uint max_col;

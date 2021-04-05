@@ -7,28 +7,35 @@ using namespace ariel;
 
 const char DEFAULT = '_';
 
-//make_pair(row, col)  // make_pair(inner, message.at(i))
-
 namespace ariel
 {
 
     void Board::post(uint row, uint col, Direction d, string message)
     {
-        for (int i = 0; i < message.length(); i++)
+        this->min_row = min(this->min_row, row);
+        this->max_row = max(this->max_row, row);
+        this->min_col = min(this->min_col, col);
+        this->max_col = max(this->max_col, col);
+
+        pair<uint, uint> inner;
+        
+        if (d == Direction::Vertical)
         {
-            this->max_row = max(this->max_row, row);
-            this->max_col = max(this->max_col, col);
-            this->min_row = min(this->min_row, row);
-            this->min_col = min(this->min_col, col);
-            
-            inner.insert({row, col});
-            board.insert({inner, message.at(i)});
-            if (d == Direction::Vertical)
-            { //if the direction is Vertical than move row +1
+            for (ulong i = 0; i < message.length(); i++)
+            {
+                inner.first = row;
+                inner.second = col;
+                board.insert({inner, message.at(i)});
                 row++;
             }
-            else
-            { // if the direction is Horizontal than move col +1 for next char
+        }
+        else
+        {
+            for (ulong i = 0; i < message.length(); i++)
+            {
+                inner.first = row;
+                inner.second = col;
+                board.insert({inner, message.at(i)});
                 col++;
             }
         }
@@ -36,49 +43,64 @@ namespace ariel
 
     string Board::read(uint row, uint col, Direction d, uint len)
     {
+        pair<uint, uint> inner;
         char c = DEFAULT;
         string res;
-        inner.insert({row, col});
 
-        for (int i = 0; i < len; i++)
+        if (d == Direction::Vertical)
         {
-            if (board.count(inner))
+            for (ulong i = 0; i < len; i++)
             {
-                c = board.at(inner);
-                res += c;
-            }
-            else
-            {
-                c = DEFAULT;
-                res += c;
-            }
-            if (d == Direction::Vertical)
-            { //if the direction is Vertical than move row +1
+                inner.first = row;
+                inner.second = col;
+                if (board.count(inner) != 0)
+                {
+                    c = board.at(inner);
+                    res += c;
+                }
+                else
+                {
+                    c = DEFAULT;
+                    res += c;
+                }
                 row++;
             }
-            else
-            { // if the direction is Horizontal than move col +1 for next char
+        }
+        else
+        {
+            for (ulong i = 0; i < len; i++)
+            {
+                inner.first = row;
+                inner.second = col;
+                if (board.count(inner) != 0)
+                {
+                    c = board.at(inner);
+                    res += c;
+                }
+                else
+                {
+                    c = DEFAULT;
+                    res += c;
+                }
                 col++;
             }
         }
         return res;
     }
+
     void Board::show()
     {
-        for (uint i = (this->min_row)-1; i <= (this->max_row); i++)
+        pair<uint, uint> inner;
+        char c = DEFAULT;
+        for (uint i = (this->min_row); i < (this->max_row); i++)
         {
             cout << i << ": ";
-            for (uint j = (this->min_col); j <= (this->max_col + 1); j++)
+            for (uint j = (this->min_col); j < (this->max_col); j++)
             {
-                inner.insert({i, j});
-                if (board.count(inner))
-                {
-                    cout << board.at(inner) << endl;
-                }
-                else
-                {
-                    cout << DEFAULT << endl;
-                }
+                inner.first = i;
+                inner.second = j;
+                c = board.at(inner);
+                cout << c << endl;
             }
         }
     }
