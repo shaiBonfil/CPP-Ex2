@@ -5,8 +5,6 @@
 #include <stdexcept>
 #include <limits.h>
 
-using namespace std;
-
 namespace ariel
 {
 
@@ -15,7 +13,7 @@ namespace ariel
 
     private:
         //define object holds the raw and the col on the borad
-        map<pair<uint, uint>, char> board;
+        std::map<std::pair<uint, uint>, char> board;
         uint max_row;
         uint min_row;
         uint max_col;
@@ -29,8 +27,8 @@ namespace ariel
         }
         ~Board() {} // destructor
 
-        void post(uint row, uint col, Direction d, string message);
-        string read(uint row, uint col, Direction d, uint len);
+        void post(uint row, uint col, Direction d, std::string message);
+        std::string read(uint row, uint col, Direction d, uint len);
         void show();
     };
 }
