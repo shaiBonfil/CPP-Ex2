@@ -25,6 +25,7 @@ namespace ariel
             {
                 inner.first = row;
                 inner.second = col;
+                board.erase(inner);
                 board.insert({inner, message.at(i)});
                 row++;
             }
@@ -35,6 +36,7 @@ namespace ariel
             {
                 inner.first = row;
                 inner.second = col;
+                board.erase(inner);
                 board.insert({inner, message.at(i)});
                 col++;
             }
@@ -91,16 +93,14 @@ namespace ariel
     void Board::show()
     {
         pair<uint, uint> inner;
-        char c = DEFAULT;
-        for (uint i = (this->min_row); i < (this->max_row); i++)
+        for (uint i = (this->min_row); i <= (this->max_row); i++)
         {
             cout << i << ": ";
-            for (uint j = (this->min_col); j < (this->max_col); j++)
+            for (uint j = (this->min_col); j <= (this->max_col); j++)
             {
                 inner.first = i;
                 inner.second = j;
-                c = board.at(inner);
-                cout << c << endl;
+                cout << board.at(inner) << endl;
             }
         }
     }
